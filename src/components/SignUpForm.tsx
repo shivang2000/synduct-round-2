@@ -47,7 +47,11 @@ const SignUpForm = () => {
   const authContext = useAuth();
   useEffect(() => {
     if(authContext.currentUser?.email){
-      router.push('/')
+      if(authContext.currentUser.emailVerified){
+        router.push("/")
+      }else {
+        router.push("/verify-email")
+      }
     }
   },[authContext, router])
   return (

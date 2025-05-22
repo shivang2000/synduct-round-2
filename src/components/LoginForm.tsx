@@ -19,15 +19,23 @@ const LoginForm = () => {
     e.preventDefault();
 
     await signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        router.push("/");
+      .then((user) => {
+        if(user.user.emailVerified){
+          router.push("/")
+        }else {
+          router.push("/verify-email")
+        }
       })
       .catch((err) => console.error(err));
   };
 
   useEffect(() => {
     if(authContext.currentUser?.email){
-      router.push('/')
+      if(authContext.currentUser.emailVerified){
+        router.push("/")
+      }else {
+        router.push("/verify-email")
+      }
     }
   },[authContext, router])
   
