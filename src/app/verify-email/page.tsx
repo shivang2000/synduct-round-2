@@ -15,7 +15,7 @@ const VerifyEmail = () => {
     
   const handleResentEmailVerification = () => {
     if(authContext.currentUser){
-      sendEmailVerification(authContext.currentUser).then((res) => {
+      sendEmailVerification(authContext.currentUser).then(() => {
 
       }).catch(err => console.error(err))
 
@@ -23,7 +23,7 @@ const VerifyEmail = () => {
   }
 const router = useRouter();
   const logout = () => {
-    signOut(auth).then(res => {
+    signOut(auth).then(() => {
       router.push('/login')
     }).catch(err => console.error(err))}
   

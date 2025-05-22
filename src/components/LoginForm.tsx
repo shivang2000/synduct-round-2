@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { useEffect, useState } from "react";
+import { BaseSyntheticEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { signInWithEmailAndPassword,  } from "firebase/auth";
 import { useAuth } from "@/context/auth-context";
@@ -14,11 +14,12 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
   const authContext = useAuth();
   const router = useRouter();
-  const handleSubmit = async (e: any) => {
+  // @typescript-eslint/no-explicit-any
+  const handleSubmit = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
 
-    const user = await signInWithEmailAndPassword(auth, email, password)
-      .then((res) => {
+    await signInWithEmailAndPassword(auth, email, password)
+      .then(() => {
         router.push("/");
       })
       .catch((err) => console.error(err));
@@ -28,7 +29,7 @@ const LoginForm = () => {
     if(authContext.currentUser?.email){
       router.push('/')
     }
-  },[authContext])
+  },[authContext, router])
   
   return (
     <form onSubmit={handleSubmit}>

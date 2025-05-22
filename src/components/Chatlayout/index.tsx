@@ -5,6 +5,14 @@ import { cn } from "@/lib/utils";
 import { openai } from "@/openAI";
 import { useState } from "react";
 
+interface OpenAIRes {
+        output: {
+          content: {
+            text: string
+          }[]
+        }[]
+      };
+
 type chat =
   | {
       type: "USER";
@@ -12,7 +20,7 @@ type chat =
     }
   | {
       type: "AI";
-      output: any;
+      output:  OpenAIRes
     };
 
 const ChatLayout = () => {
@@ -48,7 +56,7 @@ const ChatLayout = () => {
             ...prev,
             {
               type: "AI",
-              output: res,
+              output: res as OpenAIRes,
             },
           ]);
           setUserInput("");

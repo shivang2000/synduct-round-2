@@ -2,7 +2,7 @@
 
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { useEffect, useState } from "react";
+import { BaseSyntheticEvent, useEffect, useState } from "react";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "@/firebase";
 import { useRouter } from "next/navigation";
@@ -26,7 +26,8 @@ const SignUpForm = () => {
   };
   const router = useRouter();
 
-  const handleSubmit = (e: any) => {
+  // @typescript-eslint/no-explicit-any
+  const handleSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
 
     createUserWithEmailAndPassword(auth, formdata.email, formdata.password)
@@ -35,7 +36,7 @@ const SignUpForm = () => {
           displayName: `${formdata.firstName} ${formdata.lastName}`,
           photoURL: formdata.photo ? formdata.photo : undefined
         })
-          .then((updateProfileres) => {})
+          .then(() => {})
           .catch((err) => console.error(err));
 
         router.push("/verify-email");
@@ -48,7 +49,7 @@ const SignUpForm = () => {
     if(authContext.currentUser?.email){
       router.push('/')
     }
-  },[authContext])
+  },[authContext, router])
   return (
     <form onSubmit={handleSubmit}>
       <div className="flex flex-col  gap-4 pb-2 ">

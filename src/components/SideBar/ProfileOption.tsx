@@ -25,7 +25,7 @@ const ProfileOption = ({}: ProfileOptionProps) => {
     const router = useRouter();
   
   const logout = () => {
-    signOut(auth).then(res => {
+    signOut(auth).then(() => {
       router.push('/login')
     }).catch(err => console.error(err))
   }
